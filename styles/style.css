@@ -14,6 +14,9 @@ body {
    font-family: 'Play', sans-serif;
    font-size: 20px;
    color: var(--color-text);
+}
+
+.wrapper {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -68,34 +71,36 @@ body {
    background-color: var(--color-active);
 }
 
-.backspace {
+.Backspace {
    min-width: 140px;
 }
 
-.tab {
+.Tab {
    min-width: 60px;
 }
 
-.del {
+.Delete {
    min-width: 60px;
 }
 
-.capslk {
+.CapsLock {
    min-width: 100px;
 }
 
-.enter {
+.Enter {
    min-width: 140px;
 }
 
-.shift {
+.ShiftLeft,
+.ShiftRight {
    min-width: 120px;
 }
 
-.ctrl {
+.ControlLeft,
+.ControlRight {
    min-width: 60px;
 }
 
-.space {
+.Space {
    min-width: 400px;
 }
