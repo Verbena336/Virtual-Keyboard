@@ -46,7 +46,7 @@ body {
    gap: 10px;
 }
 
-.key {
+.keyboard__key {
    position: relative;
    display: flex;
    justify-content: center;
@@ -61,11 +61,11 @@ body {
    box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.3);
 }
 
-.key:hover {
+.keyboard__key:hover {
    background-color: var(--color-hover);
 }
 
-.key:active {
+.keyboard__key:active {
    top: 2px;
    box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.3) inset;
    background-color: var(--color-active);
