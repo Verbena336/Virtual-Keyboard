@@ -1,25 +1,21 @@
 /* eslint-disable import/extensions */
 import createElem from './createElem.js';
+import Button from './button.js';
 
-export default class Keyboard {
-  constructor(keyboardArr) {
-    this.keyboardArr = keyboardArr;
-  }
-
-  generateKb(lang) {
-    this.lang = lang;
-    this.wrapper = createElem('div', ['wrapper']);
-    this.textarea = createElem('textarea', ['textarea'], null, this.wrapper);
-    this.keyboard = createElem('div', ['keyboard'], null, this.wrapper);
-    this.keyboardArr.forEach((row) => {
-      this.row = createElem('div', ['keyboard__row'], null, this.keyboard);
-      row.forEach((item) => {
-        createElem('div', ['keyboard__key', item], lang.find((buttonKey) => buttonKey.key === item).letter, this.row);
-      });
+export default function generateKb(keyboardArr, lang) {
+  const wrapper = createElem('div', ['wrapper']);
+  createElem('textarea', ['textarea'], null, wrapper);
+  const keyboard = createElem('div', ['keyboard'], null, wrapper);
+  keyboardArr.forEach((row) => {
+    const rowElem = createElem('div', ['keyboard__row'], null, keyboard);
+    row.forEach((item) => {
+      const matchButton = lang.find((buttonItem) => buttonItem.key === item);
+      if (matchButton) {
+        rowElem.append(new Button(matchButton).button);
+      }
     });
-    this.system = createElem('span', ['system'], 'Keyboard for Windows', this.wrapper);
-    this.languageInfo = createElem('span', ['language-info'], 'Alt + Shift to change language', this.wrapper);
-    document.body.prepend(this.wrapper);
-    return this;
-  }
+  });
+  createElem('span', ['system'], 'Keyboard for Windows', wrapper);
+  createElem('span', ['language-info'], 'Alt + Shift to change language', wrapper);
+  document.body.prepend(wrapper);
 }
