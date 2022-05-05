@@ -1,0 +1,101 @@
+@font-face {
+   font-family: 'Play', sans-serif;
+   src: url(./fonts/Play-Regular.ttf);
+}
+
+:root {
+   --color-primary: rgb(255, 255, 255);
+   --color-hover: rgb(238, 238, 238);
+   --color-active: rgb(211, 211, 211);
+   --color-text: rgb(40, 40, 40);
+}
+
+body {
+   font-family: 'Play', sans-serif;
+   font-size: 20px;
+   color: var(--color-text);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   gap: 20px;
+}
+
+.textarea {
+   font-family: inherit;
+   font-size: 18px;
+   min-width: 600px;
+   min-height: 100px;
+}
+
+.keyboard {
+   display: flex;
+   gap: 10px;
+   flex-direction: column;
+   background-color: var(--color-primary);
+   border-radius: 10px;
+   padding: 10px;
+   box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.3);
+}
+
+.keyboard__row {
+   display: flex;
+   gap: 10px;
+}
+
+.key {
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 5px;
+   min-height: 40px;
+   min-width: 40px;
+   background-color: var(--color-primary);
+   border-radius: 10px;
+   cursor: pointer;
+   transition: all .2s;
+   box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.key:hover {
+   background-color: var(--color-hover);
+}
+
+.key:active {
+   top: 2px;
+   box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.3) inset;
+   background-color: var(--color-active);
+}
+
+.backspace {
+   min-width: 140px;
+}
+
+.tab {
+   min-width: 60px;
+}
+
+.del {
+   min-width: 60px;
+}
+
+.capslk {
+   min-width: 100px;
+}
+
+.enter {
+   min-width: 140px;
+}
+
+.shift {
+   min-width: 120px;
+}
+
+.ctrl {
+   min-width: 60px;
+}
+
+.space {
+   min-width: 400px;
+}
