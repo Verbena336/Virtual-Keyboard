@@ -13,11 +13,15 @@ export default class Button {
       this.classesArr.push('keyboard__key--size-xs');
     } else if (this.key === 'CapsLock') {
       this.classesArr.push('keyboard__key--size-s');
+      this.light = createElem('div', ['light']);
     } else if (this.key === 'ShiftLeft' || this.key === 'ShiftRight') {
       this.classesArr.push('keyboard__key--size-m');
     } else if (this.key === 'Space') {
       this.classesArr.push('keyboard__key--size-xl');
     }
     this.button = createElem('div', this.classesArr, letter);
+    if (this.light) {
+      this.button.append(this.light);
+    }
   }
 }

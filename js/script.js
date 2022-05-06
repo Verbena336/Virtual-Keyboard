@@ -1,12 +1,57 @@
 /* eslint-disable import/extensions */
-import ru from './languages/ru.js';
-// import en from './languages/en.js';
-import generateKb from './keyboard.js';
+// import { en, ru } from './languages/languages.js';
+// import { Keyboard } from './keyboard.js';
+import keyboardArr from './keybordArr.js';
+import createElem from './createElem.js';
+import Button from './button.js';
+import languages from './languages/languages.js';
 
-const keyboardArr = [['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace'],
-  ['Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete'],
-  ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'],
-  ['ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight'],
-  ['ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight']];
+const lang = JSON.parse(window.localStorage.getItem('language') || '"en"');
 
-generateKb(keyboardArr, ru);
+const Keyboard = {
+
+  elements: {
+    wrapper: null,
+    textarea: null,
+    btnArr: [],
+    keyboard: null,
+  },
+
+  const: {
+    language: null,
+    ctrl: false,
+    alt: false,
+  },
+
+  properties: {
+    shift: false,
+  },
+
+  generateTextarea() {
+    this.elements.wrapper = createElem('div', ['wrapper']);
+    this.elements.textarea = createElem('textarea', ['textarea'], null, this.elements.wrapper);
+    createElem('span', ['system'], 'Keyboard for Windows', this.elements.wrapper);
+    createElem('span', ['language-info'], 'Alt + Ctrl to change language', this.elements.wrapper);
+  },
+
+  generateKb(keyboardAr, langKey) {
+    Keyboard.generateTextarea();
+    this.const.language = languages[langKey];
+    this.elements.keyboard = createElem('div', ['keyboard'], null, this.elements.wrapper);
+    keyboardAr.forEach((row) => {
+      const rowElem = createElem('div', ['keyboard__row'], null, this.elements.keyboard);
+      row.forEach((item) => {
+        const matchButton = this.const.language.find((buttonItem) => buttonItem.key === item);
+        if (matchButton) {
+          const newBtn = new Button(matchButton);
+          this.elements.btnArr.push(newBtn);
+          rowElem.append(newBtn.button);
+        }
+      });
+    });
+    document.body.prepend(this.elements.wrapper);
+    Keyboard.handleEvents();
+  },
+};
+
+Keyboard.generateKb(keyboardArr, lang);

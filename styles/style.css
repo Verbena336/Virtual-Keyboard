@@ -66,10 +66,25 @@ body {
    background-color: var(--color-hover);
 }
 
-.keyboard__key:active {
+.keyboard__key.press {
    top: 2px;
    box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.3) inset;
    background-color: var(--color-active);
+}
+
+.light {
+   position: absolute;
+   top: 7px;
+   right: 7px;
+   background-color: rgb(219,219,219);
+   min-width: 7px;
+   min-height: 7px;
+   border-radius: 50px;
+}
+
+.keyboard__key:active .light {
+   background-color: var(--color-primary);
+   box-shadow: 0 0 10px 4px var(--color-primary);
 }
 
 .keyboard__key--size-l {
