@@ -52,6 +52,42 @@ const Keyboard = {
     document.body.prepend(this.elements.wrapper);
     Keyboard.handleEvents();
   },
+
+  shiftEvent() {
+    if (this.properties.shift) {
+      this.elements.btnArr.forEach((btn) => {
+        const foundedBtn = this.const.language.find((item) => item.key === btn.key);
+        if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.shift;
+      });
+    } else {
+      this.elements.btnArr.forEach((btn) => {
+        const foundedBtn = this.const.language.find((item) => item.key === btn.key);
+        if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.letter;
+      });
+    }
+  },
+
+  handleEvents() {
+    document.addEventListener('keydown', (e) => {
+      this.elements.textarea.focus();
+      e.preventDefault();
+      const newBtn = this.elements.btnArr.find((item) => item.key === e.code);
+      if (newBtn)newBtn.button.classList.add('press');
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        this.properties.shift = true;
+        Keyboard.shiftEvent();
+      }
+    });
+    document.addEventListener('keyup', (e) => {
+      const newBtn = this.elements.btnArr.find((item) => item.key === e.code);
+      if (newBtn) newBtn.button.classList.remove('press');
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        this.properties.shift = false;
+        Keyboard.shiftEvent();
+      }
+    });
+  },
+
 };
 
 Keyboard.generateKb(keyboardArr, lang);
