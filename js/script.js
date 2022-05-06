@@ -67,7 +67,24 @@ const Keyboard = {
     }
   },
 
+  changeLanguage() {
+    if (this.const.language === languages.en) {
+      this.const.language = languages.ru;
+      window.localStorage.setItem('language', JSON.stringify(Object.keys(languages)[1]));
+    } else {
+      this.const.language = languages.en;
+      window.localStorage.setItem('language', JSON.stringify(Object.keys(languages)[0]));
+    }
+    this.elements.btnArr.forEach((buttn) => {
+      const foundedBtn = this.const.language.find((item) => item.key === buttn.key);
+      buttn.letter = foundedBtn.letter;
+      buttn.shift = foundedBtn.shift;
+      buttn.button.innerHTML = foundedBtn.letter;
+    });
+  },
+
   handleEvents() {
+    const pressed = new Set();
     document.addEventListener('keydown', (e) => {
       this.elements.textarea.focus();
       e.preventDefault();
@@ -77,6 +94,10 @@ const Keyboard = {
         this.properties.shift = true;
         Keyboard.shiftEvent();
       }
+      if (e.code === 'ControlLeft' || e.code === 'ControlRight') pressed.add(e.code[0]);
+      if (e.code === 'AltLeft' || e.code === 'AltRight') pressed.add(e.code[0]);
+      if (pressed.size === 2) Keyboard.changeLanguage();
+      this.elements.textarea.innerHTML = newBtn.button.innerHTML;
     });
     document.addEventListener('keyup', (e) => {
       const newBtn = this.elements.btnArr.find((item) => item.key === e.code);
@@ -85,6 +106,8 @@ const Keyboard = {
         this.properties.shift = false;
         Keyboard.shiftEvent();
       }
+      if (e.code === 'ControlLeft' || e.code === 'ControlRight') pressed.delete(e.code[0]);
+      if (e.code === 'AltLeft' || e.code === 'AltRight') pressed.delete(e.code[0]);
     });
   },
 
