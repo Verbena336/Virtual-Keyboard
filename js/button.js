@@ -20,6 +20,7 @@ export default class Button {
       this.classesArr.push('keyboard__key--size-xl');
     }
     this.button = createElem('div', this.classesArr, letter);
+    this.button.dataset.key = `${this.key}`
     if (this.light) {
       this.button.append(this.light);
     }
