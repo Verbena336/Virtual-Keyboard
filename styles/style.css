@@ -82,7 +82,7 @@ body {
    border-radius: 50px;
 }
 
-.keyboard__key:active .light {
+.light.active{
    background-color: var(--color-primary);
    box-shadow: 0 0 10px 4px var(--color-primary);
 }

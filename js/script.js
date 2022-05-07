@@ -14,6 +14,7 @@ const Keyboard = {
     wrapper: null,
     textarea: null,
     btnArr: [],
+    FnBtn: ['Tab', 'CapsLock', 'ShiftLeft', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'Backspace', 'Delete', 'Enter', 'ShiftRight', 'AltRight', 'ControlRight', 'ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'],
     keyboard: null,
   },
 
@@ -25,6 +26,7 @@ const Keyboard = {
 
   properties: {
     shift: false,
+    caps: false,
   },
 
   generateTextarea() {
@@ -55,6 +57,36 @@ const Keyboard = {
 
   shiftEvent() {
     if (this.properties.shift) {
+      if (!this.properties.caps) {
+        this.elements.btnArr.forEach((btn) => {
+          const foundedBtn = this.const.language.find((item) => item.key === btn.key);
+          if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.shift;
+        });
+      } else {
+        this.elements.btnArr.forEach((btn) => {
+          const foundedBtn = this.const.language.find((item) => item.key === btn.key);
+          if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.shift.toLowerCase();
+        });
+      }
+    } else {
+      Keyboard.capsEvent();
+    }
+  },
+
+  capsEvent() {
+    if (this.properties.caps) {
+      if (this.properties.shift) {
+        this.elements.btnArr.forEach((btn) => {
+          const foundedBtn = this.const.language.find((item) => item.key === btn.key);
+          if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.shift.toLowerCase();
+        });
+      } else {
+        this.elements.btnArr.forEach((btn) => {
+          const foundedBtn = this.const.language.find((item) => item.key === btn.key);
+          if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.letter.toUpperCase();
+        });
+      }
+    } else if (this.properties.shift) {
       this.elements.btnArr.forEach((btn) => {
         const foundedBtn = this.const.language.find((item) => item.key === btn.key);
         if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.shift;
@@ -62,7 +94,7 @@ const Keyboard = {
     } else {
       this.elements.btnArr.forEach((btn) => {
         const foundedBtn = this.const.language.find((item) => item.key === btn.key);
-        if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.letter;
+        if (foundedBtn.shift) btn.button.innerHTML = foundedBtn.letter.toLowerCase();
       });
     }
   },
@@ -79,8 +111,25 @@ const Keyboard = {
       const foundedBtn = this.const.language.find((item) => item.key === buttn.key);
       buttn.letter = foundedBtn.letter;
       buttn.shift = foundedBtn.shift;
-      buttn.button.innerHTML = foundedBtn.letter;
+      const isFnBtn = this.elements.FnBtn.find((item) => item === buttn.key);
+      if (!isFnBtn) {
+        if (this.properties.caps) {
+          if (this.properties.shift) {
+            buttn.button.innerHTML = foundedBtn.shift.toLowerCase();
+          } else {
+            buttn.button.innerHTML = foundedBtn.letter.toUpperCase();
+          }
+        } else if (this.properties.shift) {
+          buttn.button.innerHTML = foundedBtn.shift;
+        } else {
+          buttn.button.innerHTML = foundedBtn.letter;
+        }
+      }
     });
+  },
+
+  textareaFill(symbol) {
+    console.log(symbol);
   },
 
   handleEvents() {
@@ -94,14 +143,38 @@ const Keyboard = {
         this.properties.shift = true;
         Keyboard.shiftEvent();
       }
+      if (e.code === 'CapsLock') {
+        if (!this.properties.caps) {
+          this.properties.caps = true;
+          newBtn.light.classList.add('active');
+        } else {
+          this.properties.caps = false;
+          newBtn.button.classList.remove('press');
+          newBtn.light.classList.remove('active');
+        }
+        Keyboard.capsEvent();
+      }
       if (e.code === 'ControlLeft' || e.code === 'ControlRight') pressed.add(e.code[0]);
       if (e.code === 'AltLeft' || e.code === 'AltRight') pressed.add(e.code[0]);
+      const isFnBtn = this.elements.FnBtn.find((item) => item === newBtn.key);
       if (pressed.size === 2) Keyboard.changeLanguage();
-      this.elements.textarea.innerHTML = newBtn.button.innerHTML;
+      if (this.properties.shift && !isFnBtn) {
+        if (this.properties.caps) {
+          Keyboard.textareaFill(newBtn.shift.toLowerCase());
+        } else {
+          Keyboard.textareaFill(newBtn.shift);
+        }
+      } else if (!this.properties.shift && !isFnBtn) {
+        if (this.properties.caps) {
+          Keyboard.textareaFill(newBtn.letter.toUpperCase());
+        } else {
+          Keyboard.textareaFill(newBtn.letter);
+        }
+      }
     });
     document.addEventListener('keyup', (e) => {
       const newBtn = this.elements.btnArr.find((item) => item.key === e.code);
-      if (newBtn) newBtn.button.classList.remove('press');
+      if (newBtn && newBtn.key !== 'CapsLock') newBtn.button.classList.remove('press');
       if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
         this.properties.shift = false;
         Keyboard.shiftEvent();
