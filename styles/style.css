@@ -1,0 +1,110 @@
+@font-face {
+   font-family: 'Play', sans-serif;
+   src: url(./fonts/Play-Regular.ttf);
+}
+
+:root {
+   --color-primary: rgb(255, 255, 255);
+   --color-hover: rgb(238, 238, 238);
+   --color-active: rgb(211, 211, 211);
+   --color-text: rgb(40, 40, 40);
+}
+
+body {
+   font-family: 'Play', sans-serif;
+   font-size: 20px;
+   color: var(--color-text);
+}
+
+.wrapper {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   gap: 20px;
+}
+
+.textarea {
+   font-family: inherit;
+   font-size: 18px;
+   min-width: 600px;
+   min-height: 100px;
+   padding: 10px;
+}
+
+.keyboard {
+   display: flex;
+   gap: 10px;
+   /* flex-direction: column; */
+   flex-direction: row;
+   flex-wrap: wrap;
+   width: 930px;
+   background-color: var(--color-primary);
+   border-radius: 10px;
+   padding: 10px;
+   box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.3);
+}
+
+.keyboard__key {
+   user-select: none;  
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 5px;
+   min-height: 40px;
+   min-width: 40px;
+   background-color: var(--color-primary);
+   border-radius: 10px;
+   cursor: pointer;
+   transition: all .2s;
+   box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.3);
+   transition: .1s;
+}
+
+.keyboard__key:hover {
+   background-color: var(--color-hover);
+}
+
+.keyboard__key.press {
+   top: 2px;
+   box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.3) inset;
+   background-color: var(--color-active);
+}
+
+.light {
+   position: absolute;
+   top: 7px;
+   right: 7px;
+   background-color: rgb(219,219,219);
+   min-width: 7px;
+   min-height: 7px;
+   border-radius: 50px;
+}
+
+.light.active{
+   background-color: var(--color-primary);
+   box-shadow: 0 0 10px 4px var(--color-primary);
+}
+
+.keyboard__key--size-l {
+   min-width: 140px;
+}
+
+.keyboard__key--size-xs {
+   min-width: 60px;
+}
+
+.keyboard__key--size-s {
+   min-width: 100px;
+}
+
+.keyboard__key--size-m {
+   min-width: 120px;
+}
+
+.keyboard__key--size-xl {
+   min-width: 400px;
+}
