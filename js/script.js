@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import createElem from './helpers/createElem.js';
 import Button from './helpers/button.js';
 import languages from './helpers/languages.js';
@@ -33,6 +32,7 @@ const Keyboard = {
     this.elements.textarea = createElem('textarea', ['textarea'], null, this.elements.wrapper);
     createElem('span', ['system'], 'Keyboard for Windows', this.elements.wrapper);
     createElem('span', ['language-info'], 'Alt + Ctrl to change language', this.elements.wrapper);
+    this.elements.textarea.setAttribute('spellcheck', 'false');
   },
 
   generateKb() {
@@ -137,10 +137,10 @@ const Keyboard = {
   },
 
   handleEvents(e) {
-    this.elements.textarea.focus();
     const newBtn = this.sets.btnArr.find((item) => item.key === e.code);
     if (!newBtn) return;
     if (e.type === 'keydown' || e.type === 'mousedown') {
+      this.elements.textarea.focus();
       if (e.preventDefault) e.preventDefault();
       newBtn.button.classList.add('press');
       if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {

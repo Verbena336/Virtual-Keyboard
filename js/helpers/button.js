@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import createElem from './createElem.js';
 
 export default class Button {
