@@ -20,5 +20,5 @@ Virtual Keyboard for Windows
 ## Stack
 
 * HTML
-* Sass
+* CSS
 * JS
